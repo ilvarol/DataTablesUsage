@@ -13,7 +13,30 @@
                 ajax: {
                     url: "@Url.Action("Test", "DataTables")",   //json uri
                     type: "POST",
-                    dataSrc: ""                                 //json object name to read or a plain array
+                    //dataSrc: ""                               //json object name to read or a plain array
+                    data: function (d) {
+                        var currentColumn;
+                        switch (d.order[0]['column']) {
+                            case 0:
+                                currentColumn = "Id";
+                                break;
+                            case 1:
+                                currentColumn = "Name";
+                                break;
+                            case 2:
+                                currentColumn = "Surname";
+                                break;
+                            case 3:
+                                currentColumn = "Email";
+                                break;
+                            case 4:
+                                currentColumn = "Gender";
+                                break;
+                            default:
+                                currentColumn = "";
+                        }
+                        d.order[0]['column'] = currentColumn;
+                    }
                 },
                 columns: [                                      // or it can define that way: { data: 0 },
                     { data: 'id' },
@@ -68,11 +91,5 @@
                 <td>Row 4 Data 5</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <th>Column 1</th>
-                <th>Column 2</th>
-            </tr>
-        </tfoot>
     </table>
 </p>
